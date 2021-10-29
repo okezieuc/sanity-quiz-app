@@ -1,4 +1,5 @@
 import { useState } from "react"
+import sanity from "../lib/sanity";
 import Link from "next/link"
 import {
   Link as ChakraLink,
@@ -23,7 +24,7 @@ const Option = ({ action, option, }) => <Box as="button" onClick={action}>
 	</Box>
 </Box>
 
-const Index = () => {
+const Index = ({ questiondata }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [chosenAnswer, setChosenAnswer] = useState(null)
 	
@@ -54,7 +55,8 @@ const Index = () => {
           <ModalCloseButton />
           <ModalBody>
             <Box textAlign="center" fontSize="4xl">	
-						{ chosenAnswer == "A" ? <Box><Box fontSize="6xl">🎉</Box>Correct</Box> : <Box><Box fontSize="6xl">🥱</Box>Incorrect</Box> }
+						{
+							chosenAnswer == "A" ? <Box><Box fontSize="6xl">🎉</Box>Correct</Box> : <Box><Box fontSize="6xl">🥱</Box>Incorrect</Box>}
 						<Text fontSize="lg">
 							Correct Answer: {"A" /*DO NOT FORGET TO REPLACE */}
 						</Text>
@@ -76,3 +78,31 @@ const Index = () => {
 )}
 
 export default Index
+
+export async function getStaticPaths() {
+	const query = `*[_type == "question" && !(_id in path('drafts.**'))]{
+		_id,
+		number,
+	}`;
+	let questiondata = await sanity.fetch(query);
+	let paths = []
+	questiondata.forEach((question) => paths.push({ params: { number: `${question.number}`}}))
+	
+	return {
+		paths,
+		fallback: false,
+	}
+}
+
+export async function getStaticProps({ params }) {
+	const number = parseInt(params.number);
+	const query = `*[_type == "question" && number == $number && !(_id in path('drafts.**'))]`;
+	
+  let questiondata = await sanity.fetch(query, { number: number });
+  
+  return {
+    props: {
+      questiondata,
+    },
+  };
+}
