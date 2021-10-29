@@ -1,54 +1,41 @@
+import Link from "next/link"
 import {
   Link as ChakraLink,
   Text,
-  Code,
-  List,
-  ListIcon,
-  ListItem,
+	Box,
+  Flex, SimpleGrid, Center,
 } from '@chakra-ui/react'
-import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
-import { Footer } from '../components/Footer'
+
+const QuestionItem = () => <Center w="full" h="16" bg="teal.4000" borderRadius="8" border="1px solid" borderColor="#aaa" fontSize="2xl" _hover={{ background: 'gray.100' }}>
+<Link href="/1">99</Link>
+</Center>
 
 const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Text>
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code>.
-      </Text>
-
-      <List spacing={3} my={0}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
-
-    <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
-  </Container>
+  <Flex height="100vh">
+    
+			<Box fontSize="6xl" height="100vh" fontWeight="bold" w="max-content" maxW="460px" px="4" bg="gray.100" lineHeight="shorter">
+				
+				<Text fontSize="5xl" mt="32" color="blue.600">2021</Text>
+				BIOLOGY <br />
+				QUIZ COMPETITION<br />
+				
+		
+			</Box>
+		<Box flex="1">
+			<SimpleGrid columns={10} spacing="4" px="20" py="20">
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+				<QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem /><QuestionItem />
+			</SimpleGrid>
+		</Box>
+  </Flex>
 )
 
 export default Index
