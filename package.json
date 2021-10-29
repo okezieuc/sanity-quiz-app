@@ -10,6 +10,8 @@
     "@chakra-ui/react": "^1.4.2",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
+    "@sanity/block-content-to-react": "^3.0.0",
+    "@sanity/client": "^2.21.7",
     "framer-motion": "^4.0.3",
     "next": "11.0.1",
     "react": "^17.0.2",
