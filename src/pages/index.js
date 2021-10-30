@@ -22,7 +22,8 @@ const QuestionItem = ({ number, used }) => (
     h="16"
     borderRadius="8"
     border="1px solid"
-    borderColor={used ? "gray.50" : "#aaa"}
+    borderColor={used ? "gray.200" : "gray.700"}
+    color={used ? "gray.200" : "gray.700"}
     fontSize="2xl"
     _hover={{ background: used ? null : "gray.100" }}
   >
