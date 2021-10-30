@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Questions } from "../data/questions";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { getUsedQuestions, addUsedQuestion } from "../lib/usedQuestions";
 import {
   Link as ChakraLink,
   Text,
@@ -52,6 +54,7 @@ const Option = ({ action, option, content }) => (
 );
 
 const Index = ({ questiondata }) => {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [chosenAnswer, setChosenAnswer] = useState(null);
 
@@ -60,12 +63,22 @@ const Index = ({ questiondata }) => {
     onOpen();
   }
 
+  useEffect(() => {
+    addUsedQuestion(`${router.query.number}`);
+    console.log("added");
+  }, []);
+
   return (
     <Box width="1200px" mx="auto">
       <Box mx="auto" minH="120px">
-        <Box my="16" w="full" textAlign="center" fontSize="4xl">
-          At which of the following organelles is food produced in plants?
-        </Box>
+        <Box
+          my="16"
+          w="full"
+          textAlign="center"
+          className="option-box"
+          fontSize="4xl"
+          dangerouslySetInnerHTML={{ __html: questiondata.question }}
+        />
       </Box>
       <Box
         maxW="40"
