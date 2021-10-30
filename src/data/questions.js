@@ -1,8 +1,7 @@
 export const Questions = [
   {
     number: 1,
-    question:
-      "Which of the following organelles is not found in the  animal cell?",
+    question: "Which of the following organelles is not found in the  animal cell?",
     optiona: "The nucleus",
     optionb: "The mitochondria",
     optionc: "The cell wall",
@@ -20,8 +19,7 @@ export const Questions = [
   },
   {
     number: 3,
-    question:
-      "Which of the following organelles is not found in the  animal cell (choose D)?",
+    question: "Another question can come here (choose D)?",
     optiona: "The nucleus",
     optionb: "The mitochondria",
     optionc: "The cell wall",
