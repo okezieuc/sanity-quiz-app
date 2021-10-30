@@ -15,7 +15,7 @@ export const Questions = [
     optiona: "The nucleus",
     optionb: "The mitochondria",
     optionc: "The cell wall",
-    optiond: "The cytoplasm",
+    optiond: "The cytoplasm <img src='/1.png' />",
     answer: "C",
   },
   {

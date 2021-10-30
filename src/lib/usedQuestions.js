@@ -1,7 +1,11 @@
-function initializeQuestions() {
+export function initializeQuestions() {
   if (!localStorage.getItem("usedQuizQuestions21")) {
     localStorage.setItem("usedQuizQuestions21", JSON.stringify({}));
   }
+}
+
+export function resetUsedQuestions() {
+  localStorage.setItem("usedQuizQuestions21", JSON.stringify({}));
 }
 
 export function getUsedQuestions() {

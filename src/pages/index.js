@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Questions } from "../data/questions";
-import { getUsedQuestions, addUsedQuestion } from "../lib/usedQuestions";
+import {
+  getUsedQuestions,
+  addUsedQuestion,
+  resetUsedQuestions,
+} from "../lib/usedQuestions";
 import {
   Link as ChakraLink,
   Text,
@@ -9,6 +13,7 @@ import {
   Flex,
   SimpleGrid,
   Center,
+  Button,
 } from "@chakra-ui/react";
 
 const QuestionItem = ({ number, used }) => (
@@ -29,10 +34,22 @@ const QuestionItem = ({ number, used }) => (
 
 const Index = ({ numberList }) => {
   const [usedQuestions, setUsedQuestions] = useState({});
+  const [shouldReset, setShouldReset] = useState(0);
+
   useEffect(() => {
     const data = getUsedQuestions();
     setUsedQuestions(data);
-  });
+  }, []);
+
+  function attemptReset() {
+    console.log("trying");
+    if (shouldReset > 2) {
+      resetUsedQuestions();
+      setUsedQuestions({});
+    } else {
+      setShouldReset(shouldReset + 1);
+    }
+  }
 
   return (
     <Flex height="100vh">
@@ -58,8 +75,18 @@ const Index = ({ numberList }) => {
           {numberList.map((number) => (
             <QuestionItem number={number} used={usedQuestions[number]} />
           ))}
-          <QuestionItem number={4} used={false} />
         </SimpleGrid>
+        <Button
+          px="4"
+          py="2"
+          bg="gray.50"
+          position="absolute"
+          top="0"
+          right="0"
+          onClick={attemptReset}
+        >
+          R
+        </Button>
       </Box>
     </Flex>
   );
