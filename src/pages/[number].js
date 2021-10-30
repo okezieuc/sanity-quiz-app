@@ -1,5 +1,5 @@
 import { useState } from "react";
-import sanity from "../lib/sanity";
+import { Questions } from "../data/questions";
 import Link from "next/link";
 import {
   Link as ChakraLink,
@@ -19,8 +19,8 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 
-const Option = ({ action, option }) => (
-  <Box as="button" onClick={action}>
+const Option = ({ action, option, content }) => (
+  <Box as="button" onClick={action} role="group">
     <Box
       px="4"
       py="2"
@@ -31,12 +31,23 @@ const Option = ({ action, option }) => (
       w="max-content"
       borderRadius="8"
       mx="auto"
+      _groupHover={{
+        background: "blue.500",
+      }}
+      _groupActive={{
+        background: "blue.600",
+      }}
     >
       {option}
     </Box>
-    <Box borderColor="#ccc" fontSize="2xl" px="4" py="2">
-      Sample option content will come here
-    </Box>
+    <Box
+      borderColor="#ccc"
+      fontSize="2xl"
+      px="4"
+      py="2"
+      className="option-box"
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
   </Box>
 );
 
@@ -64,10 +75,26 @@ const Index = ({ questiondata }) => {
         mx="auto"
       ></Box>
       <SimpleGrid columns={2} spacingX={8} spacingY={16}>
-        <Option action={() => selectAnswer("A")} option="A" />
-        <Option action={() => selectAnswer("B")} option="B" />
-        <Option action={() => selectAnswer("C")} option="C" />
-        <Option action={() => selectAnswer("D")} option="D" />
+        <Option
+          action={() => selectAnswer("A")}
+          option="A"
+          content={questiondata.optiona}
+        />
+        <Option
+          action={() => selectAnswer("B")}
+          option="B"
+          content={questiondata.optionb}
+        />
+        <Option
+          action={() => selectAnswer("C")}
+          option="C"
+          content={questiondata.optionc}
+        />
+        <Option
+          action={() => selectAnswer("D")}
+          option="D"
+          content={questiondata.optiond}
+        />
       </SimpleGrid>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
@@ -76,7 +103,7 @@ const Index = ({ questiondata }) => {
           <ModalCloseButton />
           <ModalBody>
             <Box textAlign="center" fontSize="4xl">
-              {chosenAnswer == "A" ? (
+              {chosenAnswer == questiondata.answer ? (
                 <Box>
                   <Box fontSize="6xl">🎉</Box>Correct
                 </Box>
@@ -85,9 +112,7 @@ const Index = ({ questiondata }) => {
                   <Box fontSize="6xl">🥱</Box>Incorrect
                 </Box>
               )}
-              <Text fontSize="lg">
-                Correct Answer: {"A" /*DO NOT FORGET TO REPLACE */}
-              </Text>
+              <Text fontSize="lg">Correct Answer: {questiondata.answer}</Text>
             </Box>
           </ModalBody>
 
@@ -98,7 +123,8 @@ const Index = ({ questiondata }) => {
               borderRadius="4"
               px="4"
               py="2"
-              _hover={{ background: "blue.400" }}
+              _hover={{ background: "blue.600" }}
+              _active={{ background: "blue.700" }}
               mr={3}
               onClick={onClose}
             >
@@ -114,15 +140,11 @@ const Index = ({ questiondata }) => {
 export default Index;
 
 export async function getStaticPaths() {
-  const query = `*[_type == "question" && !(_id in path('drafts.**'))]{
-		_id,
-		number,
-	}`;
-  let questiondata = await sanity.fetch(query);
   let paths = [];
-  questiondata.forEach((question) =>
-    paths.push({ params: { number: `${question.number}` } })
-  );
+  const questionCount = Questions.length;
+  for (let i = 1; i <= questionCount; i++) {
+    paths.push({ params: { number: `${i}` } });
+  }
 
   return {
     paths,
@@ -132,9 +154,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const number = parseInt(params.number);
-  const query = `*[_type == "question" && number == $number && !(_id in path('drafts.**'))]`;
-
-  let questiondata = await sanity.fetch(query, { number: number });
+  let questiondata = Questions[number - 1];
 
   return {
     props: {

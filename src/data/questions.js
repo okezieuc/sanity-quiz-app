@@ -2,11 +2,11 @@ export const Questions = [
   {
     number: 1,
     question:
-      "Which of the following organelles is not found in the  plant cell?",
+      "Which of the following organelles is not found in the  animal cell?",
     optiona: "The nucleus",
-    optionb: "The nucleus",
-    optionc: "The nucleus",
-    optiond: "The nucleus",
-    answer: "A",
+    optionb: "The mitochondria",
+    optionc: "The cell wall",
+    optiond: "The cytoplasm",
+    answer: "C",
   },
 ];
