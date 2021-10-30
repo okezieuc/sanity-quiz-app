@@ -1,5 +1,5 @@
 import Link from "next/link";
-import sanity from "../lib/sanity";
+import { Questions } from "../data/questions";
 import {
   Link as ChakraLink,
   Text,
@@ -26,7 +26,7 @@ const QuestionItem = ({ number }) => (
   </Center>
 );
 
-const Index = ({ questiondata }) => (
+const Index = ({ numberList }) => (
   <Flex height="100vh">
     <Box
       fontSize="6xl"
@@ -47,8 +47,8 @@ const Index = ({ questiondata }) => (
     </Box>
     <Box flex="1">
       <SimpleGrid columns={10} spacing="4" px="20" py="20">
-        {questiondata.map((question) => (
-          <QuestionItem number={question.number} />
+        {numberList.map((number) => (
+          <QuestionItem number={number} />
         ))}
       </SimpleGrid>
     </Box>
@@ -58,16 +58,15 @@ const Index = ({ questiondata }) => (
 export default Index;
 
 export async function getStaticProps({ params }) {
-  const query = `*[_type == "question" && !(_id in path('drafts.**'))]{
-		_id,
-		number,
-	}`;
-  //let questiondata = await sanity.fetch(query, { number: number });
-  let questiondata = await sanity.fetch(query);
+  let numberList = [];
+  const questionCount = Questions.length;
+  for (let i = 1; i <= questionCount; i++) {
+    numberList.push(i);
+  }
 
   return {
     props: {
-      questiondata,
+      numberList,
     },
   };
 }
